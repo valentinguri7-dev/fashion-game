@@ -1,0 +1,103 @@
+{
+  "user_1773125055906": {
+    "id": "user_1773125055906",
+    "username": "valestuffs",
+    "password": "893d0bfd05d647d15ebdbd98c03a5bac66b3e4ca4f3a24807affe951b50e5ef1",
+    "avatar": {
+      "type": "custom",
+      "imageUrl": "/uploads/avatar_1773169483547_m7mm5o51y.png",
+      "base": "CUSTOM"
+    },
+    "createdAt": "2026-03-10T06:44:15.906Z",
+    "partyHistory": [
+      "4JHA9Z",
+      "T7F0IY",
+      "CLHF3F",
+      "BX0MOC"
+    ],
+    "biography": "hi",
+    "socketId": "iH2HjR8iRI4qaJNYAAAL",
+    "partyId": "4JHA9Z"
+  },
+  "user_1773125129058": {
+    "id": "user_1773125129058",
+    "username": "oh im guest",
+    "password": "893d0bfd05d647d15ebdbd98c03a5bac66b3e4ca4f3a24807affe951b50e5ef1",
+    "avatar": {
+      "type": "custom",
+      "imageUrl": "/uploads/avatar_1773170431045_kkdphnx4d.png",
+      "base": "CUSTOM"
+    },
+    "createdAt": "2026-03-10T06:45:29.058Z",
+    "socketId": "xaHPeijxe0d3CmgkAAAR",
+    "partyId": "CLHF3F",
+    "partyHistory": [
+      "CLHF3F",
+      "BX0MOC"
+    ]
+  },
+  "user_1773125966344": {
+    "id": "user_1773125966344",
+    "username": "third guest",
+    "password": "893d0bfd05d647d15ebdbd98c03a5bac66b3e4ca4f3a24807affe951b50e5ef1",
+    "avatar": {
+      "type": "custom",
+      "imageUrl": "/uploads/avatar_1773163229801_qe20u8zui.png",
+      "base": "CUSTOM"
+    },
+    "createdAt": "2026-03-10T06:59:26.344Z",
+    "socketId": "k0ov98idsKKN0VWoAAAP",
+    "partyId": "CLHF3F"
+  },
+  "user_1773163154591": {
+    "id": "user_1773163154591",
+    "username": "guest 43",
+    "password": "893d0bfd05d647d15ebdbd98c03a5bac66b3e4ca4f3a24807affe951b50e5ef1",
+    "avatar": {
+      "type": "custom",
+      "imageUrl": "/uploads/avatar_1773163154590_sz1jti9p5.png",
+      "base": "CUSTOM"
+    },
+    "createdAt": "2026-03-10T17:19:14.591Z",
+    "socketId": "u7ErilyhDPRjiF2RAAAD",
+    "partyId": "VN815E"
+  },
+  "user_1773169594501": {
+    "id": "user_1773169594501",
+    "username": "oh im guest 44",
+    "password": "022dcd64a551d1785bbb9e627e9fa9b4812888588afba272da466641615104b6",
+    "avatar": {
+      "type": "custom",
+      "imageUrl": "/uploads/avatar_1773172055471_p2coi7b0h.png",
+      "base": "CUSTOM"
+    },
+    "createdAt": "2026-03-10T19:06:34.501Z",
+    "socketId": "uvT-eseiTNLS7HdbAAAB",
+    "partyId": "4JHA9Z",
+    "partyHistory": [
+      "4JHA9Z",
+      "T7F0IY",
+      "CLHF3F",
+      "BX0MOC"
+    ],
+    "biography": "yo"
+  },
+  "user_1773172029919": {
+    "id": "user_1773172029919",
+    "username": "guest 435",
+    "password": "893d0bfd05d647d15ebdbd98c03a5bac66b3e4ca4f3a24807affe951b50e5ef1",
+    "avatar": {
+      "type": "layered",
+      "gender": "female",
+      "layers": {
+        "base": "tan",
+        "hair": null,
+        "top": null,
+        "bottom": null,
+        "shoes": null
+      },
+      "colors": {}
+    },
+    "createdAt": "2026-03-10T19:47:09.919Z"
+  }
+}

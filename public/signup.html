@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Style Your Stardoll - Create Account</title>
+    <style>
+        body {
+            background: linear-gradient(135deg, #a8c0ff 0%, #3f2b96 100%);
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            display: flex;
+            gap: 40px;
+            max-width: 900px;
+            width: 100%;
+            flex-wrap: wrap;
+        }
+        .avatar-section {
+            flex: 1;
+            min-width: 300px;
+            text-align: center;
+        }
+        #previewCanvas {
+            width: 100%;
+            max-width: 300px;
+            height: 400px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-radius: 15px;
+            margin-bottom: 20px;
+            box-shadow: inset 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .customize-btn {
+            background: #6C63FF;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            margin: 5px;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+        .customize-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(108, 99, 255, 0.3);
+        }
+        .form-section {
+            flex: 1;
+            min-width: 300px;
+        }
+        h2 {
+            color: #6C63FF;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+        .subtitle {
+            color: #888;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+        input {
+            width: 100%;
+            padding: 15px;
+            margin: 10px 0;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        input:focus {
+            outline: none;
+            border-color: #6C63FF;
+        }
+        .hint {
+            color: #888;
+            font-size: 12px;
+            margin: -5px 0 15px 0;
+            display: block;
+        }
+        .terms-label {
+            display: flex;
+            align-items: flex-start;
+            margin: 20px 0;
+            color: #555;
+            font-size: 14px;
+        }
+        .terms-label input {
+            width: auto;
+            margin-right: 10px;
+            margin-top: 3px;
+        }
+        .go-play-btn {
+            width: 100%;
+            background: linear-gradient(90deg, #11998e 0%, #38ef7d 100%);
+            color: white;
+            border: none;
+            padding: 18px;
+            font-size: 20px;
+            border-radius: 30px;
+            cursor: pointer;
+            margin-top: 10px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            box-shadow: 0 10px 30px rgba(17, 153, 142, 0.3);
+            transition: all 0.3s;
+        }
+        .go-play-btn:hover:not(:disabled) {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(17, 153, 142, 0.4);
+        }
+        .go-play-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #666;
+            text-decoration: none;
+            font-size: 14px;
+        }
+        .back-link:hover {
+            color: #f5576c;
+        }
+        .error-message {
+            color: #f5576c;
+            font-size: 14px;
+            margin: 10px 0;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="avatar-section">
+            <h3>Your Stardoll</h3>
+            <canvas id="previewCanvas" width="368" height="798"></canvas>
+            <div>
+                <button class="customize-btn" onclick="alert('Hair coming soon!')">🎨 Hair</button>
+                <button class="customize-btn" onclick="alert('Face coming soon!')">😊 Face</button>
+                <button class="customize-btn" onclick="alert('Clothes coming soon!')">👗 Dress</button>
+            </div>
+            <button class="customize-btn" onclick="goBack()" style="background: #FF6B6B; margin-top: 10px;">← Change Body</button>
+        </div>
+
+        <div class="form-section">
+            <h2>Style Your Stardoll</h2>
+            <p class="subtitle">Complete your profile to start playing</p>
+            
+            <form id="signupForm">
+                <input type="text" id="username" placeholder="Username (3-15 chars)" required maxlength="15">
+                <small class="hint">Choose wisely! Don't reveal your full name.</small>
+                
+                <input type="password" id="password" placeholder="Password (min 4 chars)" required minlength="4">
+                
+                <input type="date" id="birthday" required>
+                
+                <label class="terms-label">
+                    <input type="checkbox" id="terms" required>
+                    <span>I agree to the Membership Terms</span>
+                </label>
+                
+                <div class="error-message" id="errorMsg"></div>
+                
+                <button type="submit" class="go-play-btn">GO PLAY!</button>
+            </form>
+            
+            <a href="/" class="back-link">Already have an account? Log in</a>
+        </div>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io();
+        let avatarConfig = null;
+        
+        // Load avatar from localStorage (set by avatar-creator.html)
+        function loadAvatar() {
+            const saved = localStorage.getItem('pendingAvatar');
+            if (!saved) {
+                // No avatar selected, redirect back
+                window.location.href = '/avatar-creator';
+                return;
+            }
+            
+            avatarConfig = JSON.parse(saved);
+            renderAvatar();
+        }
+        
+        function renderAvatar() {
+            if (!avatarConfig || !avatarConfig.layers) return;
+            
+            const canvas = document.getElementById('previewCanvas');
+            const ctx = canvas.getContext('2d');
+            
+            const img = new Image();
+            img.crossOrigin = "anonymous";
+            img.onload = () => {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+            };
+            img.onerror = () => {
+                console.error('Failed to load avatar');
+                // Draw placeholder
+                ctx.fillStyle = '#fdbcb4';
+                ctx.fillRect(100, 100, 168, 598);
+            };
+            img.src = `assets/avatars/bases/body_${avatarConfig.layers.base}.png`;
+        }
+        
+        function goBack() {
+            window.location.href = '/avatar-creator';
+        }
+        
+        function showError(msg) {
+            const errorDiv = document.getElementById('errorMsg');
+            errorDiv.textContent = msg;
+            errorDiv.style.display = 'block';
+        }
+        
+        // Form submission
+        document.getElementById('signupForm').onsubmit = (e) => {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value;
+            const birthday = document.getElementById('birthday').value;
+            
+            if (username.length < 3) {
+                showError('Username must be at least 3 characters!');
+                return;
+            }
+            
+            if (password.length < 4) {
+                showError('Password must be at least 4 characters!');
+                return;
+            }
+            
+            const data = {
+                username: username,
+                password: password,
+                avatarConfig: avatarConfig
+            };
+            
+            socket.emit('create-account', data);
+        };
+        
+        socket.on('account-created', (data) => {
+            // Clear pending avatar
+            localStorage.removeItem('pendingAvatar');
+            alert('Account created! Welcome to Stardoll!');
+            window.location.href = '/'; // Go to login
+        });
+        
+        socket.on('account-error', (data) => {
+            showError(data.message);
+        });
+        
+        // Load avatar on page load
+        loadAvatar();
+    </script>
+</body>
+</html>

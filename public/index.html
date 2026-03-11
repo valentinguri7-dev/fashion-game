@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>social app</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Additional styles for avatar creator */
+        .logo-container {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .logo-container h1 {
+            font-size: 48px;
+            color: #fff;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.3);
+            font-family: 'Georgia', serif;
+            letter-spacing: 2px;
+            text-transform: lowercase;
+        }
+        .logo-container h1 span {
+            color: #FFD700;
+        }
+        .login-box {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            max-width: 400px;
+            margin: 0 auto;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        .or-divider {
+            text-align: center;
+            margin: 15px 0;
+            color: #888;
+            position: relative;
+        }
+        .or-divider::before,
+        .or-divider::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 40%;
+            height: 1px;
+            background: #ddd;
+        }
+        .or-divider::before { left: 0; }
+        .or-divider::after { right: 0; }
+        
+        .register-box {
+            max-width: 400px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            margin-top: 20px;
+        }
+        
+        /* New background color for the app */
+        body {
+            background: linear-gradient(135deg, #2c3e50 0%, #4a6572 100%) !important;
+        }
+        
+        /* Different header color for register screen */
+        .register-header {
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(135deg, #1d3f58 0%, #537692 100%);
+            color: white;
+            margin-bottom: 20px;
+        }
+
+        /* NEW: Profile Screen Styles */
+        .profile-container {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .profile-header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .profile-avatar-large {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 4px solid #1d3f58;
+            object-fit: cover;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .profile-username {
+            font-size: 24px;
+            color: #1d3f58;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .bio-section {
+            margin-top: 20px;
+        }
+
+        .bio-textarea {
+            width: 100%;
+            min-height: 100px;
+            padding: 12px;
+            border: 2px solid #b3cde4;
+            border-radius: 12px;
+            font-family: inherit;
+            font-size: 14px;
+            resize: vertical;
+            background: #f8fbfd;
+        }
+
+        .bio-textarea:focus {
+            outline: none;
+            border-color: #537692;
+            background: white;
+        }
+
+        .char-count-bio {
+            text-align: right;
+            font-size: 12px;
+            color: #537692;
+            margin-top: 5px;
+        }
+
+        .save-status {
+            text-align: center;
+            margin-top: 10px;
+            font-size: 14px;
+            font-weight: bold;
+            min-height: 20px;
+        }
+
+        .save-status.saved {
+            color: #27ae60;
+        }
+
+        .save-status.error {
+            color: #c0392b;
+        }
+
+        .party-nav-section {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .party-nav-btn {
+            background: linear-gradient(135deg, #1d3f58 0%, #537692 100%);
+            color: white;
+            border: none;
+            padding: 20px 40px;
+            border-radius: 50px;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 6px 20px rgba(29,63,88,0.3);
+            width: 100%;
+            max-width: 300px;
+        }
+
+        .party-nav-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(29,63,88,0.4);
+        }
+
+        .party-nav-btn:active {
+            transform: translateY(-1px);
+        }
+
+        .section-title {
+            color: #1d3f58;
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logout-link {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .logout-link a {
+            color: #c0392b;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .logout-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <!-- SCREEN 1: LOGIN -->
+        <div id="login-screen" class="screen">
+            <div class="logo-container">
+                <h1>social app</h1>
+                <p style="color: #fff; opacity: 0.9;">Connect with friends!</p>
+            </div>
+            
+            <div class="login-box">
+                <h2 style="color: #333; margin-bottom: 20px; text-align: center;">Login</h2>
+                
+                <div class="form-group">
+                    <label>Username:</label>
+                    <input type="text" id="login-username" placeholder="Your username" maxlength="15">
+                </div>
+
+                <div class="form-group">
+                    <label>Password:</label>
+                    <input type="password" id="login-password" placeholder="Your password">
+                </div>
+
+                <button id="login-btn" class="btn-primary" style="width: 100%;">Login</button>
+                
+                <div class="switch-form" style="margin-top: 20px; font-size: 14px; text-align: center;">
+                    New here? <a href="#" onclick="showScreen('register'); return false;" style="color: #f5576c; font-weight: bold;">Create an account</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- SCREEN 2: REGISTER -->
+        <div id="register-screen" class="screen hidden">
+            <div class="register-header">
+                <h1 style="font-size: 36px; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); margin: 0;">social app</h1>
+                <p>Create your account</p>
+            </div>
+
+            <div class="register-box">
+                <h2 style="color: #6C63FF; margin-bottom: 10px; text-align: center;">Create Account</h2>
+                <p style="color: #888; margin-bottom: 30px; font-size: 14px; text-align: center;">Complete your profile</p>
+                
+                <div class="form-group">
+                    <label>Username (min 3 chars):</label>
+                    <input type="text" id="reg-username" placeholder="Choose username" maxlength="15">
+                    <div id="username-status" class="status-text"></div>
+                </div>
+
+                <div class="form-group">
+                    <label>Password (min 4 chars):</label>
+                    <input type="password" id="reg-password" placeholder="Choose password">
+                </div>
+
+                <div class="form-group">
+                    <label>Confirm Password:</label>
+                    <input type="password" id="reg-confirm-password" placeholder="Confirm password">
+                    <div id="password-match-status" style="font-size: 13px; margin-top: 5px; font-weight: bold;"></div>
+                </div>
+                
+                <input type="hidden" id="reg-avatar-config" value='{"type":"layered","gender":"female","layers":{"base":"light","hair":null,"top":null,"bottom":null,"shoes":null},"colors":{}}'>
+
+                <button id="create-account-btn" class="btn-primary" style="width: 100%; margin-top: 20px;">Create Account</button>
+                
+                <div style="margin-top: 20px; text-align: center;">
+                    <a href="#" onclick="showScreen('login'); return false;" style="color: #666; font-size: 14px;">Back to Login</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- SCREEN 3: PROFILE PAGE (HAS Change Profile Picture) -->
+        <div id="profile-screen" class="screen hidden">
+            <div class="profile-container">
+                <div class="profile-header">
+                    <img id="profile-avatar-img" src="" alt="Profile" class="profile-avatar-large">
+                    <div class="profile-username" id="profile-username"></div>
+                    <!-- Change Profile Picture ONLY on Profile Page -->
+                    <button id="change-avatar-btn" class="btn-secondary" style="width: auto; padding: 8px 16px; font-size: 13px; margin-top: 10px;">Change Profile Picture</button>
+                </div>
+
+                <div class="bio-section">
+                    <div class="section-title">
+                        <span>📝</span> About Me
+                    </div>
+                    <textarea 
+                        id="bio-textarea" 
+                        class="bio-textarea" 
+                        placeholder="Write something about yourself... (max 200 characters)"
+                        maxlength="200"
+                    ></textarea>
+                    <div class="char-count-bio"><span id="bio-char-count">0</span>/200</div>
+                    <button id="save-bio-btn" class="btn-primary" style="margin-top: 10px; width: 100%;">Save Biography</button>
+                    <div id="save-bio-status" class="save-status"></div>
+                </div>
+            </div>
+
+            <div class="party-nav-section">
+                <div class="section-title" style="justify-content: center; margin-bottom: 20px;">
+                    <span>🎉</span> Ready to Party?
+                </div>
+                <button id="go-to-party-btn" class="party-nav-btn">
+                    Go to Party Page →
+                </button>
+            </div>
+
+            <div class="logout-link">
+                <a href="#" id="profile-logout-link">← Logout</a>
+            </div>
+        </div>
+
+        <!-- SCREEN 4: Main Menu/HOME PAGE (NO Change Profile Picture - REMOVED) -->
+        <div id="main-screen" class="screen hidden">
+            <h2>Welcome, <span id="display-username"></span>!</h2>
+            
+            <!-- REMOVED: Current Avatar Display with Change Profile Picture button -->
+            
+            <div class="menu-buttons">
+                <button id="create-party-btn" class="btn-primary">Create Party</button>
+                <div class="or-divider">OR</div>
+                <input type="text" id="party-code" placeholder="Enter Party Code" maxlength="6">
+                <button id="join-party-btn" class="btn-secondary">Join Party</button>
+            </div>
+            
+            <div id="recent-parties" style="margin-top: 20px; padding: 15px; background: #f0f4f8; border-radius: 12px; display: none;"></div>
+            
+            <button id="logout-btn" class="btn-danger" style="margin-top: 30px; width: 100%;">Logout</button>
+        </div>
+
+        <!-- SCREEN 4.5: Change Avatar Modal -->
+        <div id="change-avatar-modal" class="modal hidden">
+            <div class="modal-content">
+                <h2>Change Profile Picture</h2>
+                <div class="current-avatar-large">
+                    <img id="modal-current-avatar" src="" alt="Current" style="width: 120px; height: 120px; border-radius: 50%; border: 4px solid #1d3f58; object-fit: cover;">
+                </div>
+                
+                <div class="form-group" style="margin-top: 20px;">
+                    <label>Upload New Image (PNG):</label>
+                    <div class="upload-box" id="change-upload-box">
+                        <div class="upload-placeholder" id="change-upload-placeholder">
+                            <span class="upload-icon">📷</span>
+                            <p>Click to upload new PNG</p>
+                            <small>Max 2MB • Auto-cropped to square</small>
+                        </div>
+                        <input type="file" id="change-avatar-input" accept=".png,image/png" style="display: none;">
+                    </div>
+                    <div id="change-upload-preview" class="upload-preview hidden">
+                        <img id="change-preview-img" src="" alt="New Preview">
+                        <p>✓ New image ready</p>
+                    </div>
+                </div>
+
+                <div class="modal-buttons">
+                    <button id="save-avatar-btn" class="btn-primary">Save New Picture</button>
+                    <button id="cancel-change-btn" class="btn-secondary" style="background: #999;">Cancel</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- SCREEN 5: Party Room (NO Change Profile Picture) -->
+        <div id="party-screen" class="screen hidden">
+            <div class="party-header">
+                <h2>Party Code: <span id="current-party-code"></span></h2>
+                <button id="leave-party-btn" class="btn-danger">Leave Party</button>
+            </div>
+            
+            <div id="members-list" class="members-grid"></div>
+            
+            <div class="chat-container">
+                <div id="chat-messages" class="chat-messages"></div>
+                
+                <div class="chat-input-area">
+                    <div class="quick-reactions">
+                        <span class="emoji-btn">👋</span>
+                        <span class="emoji-btn">❤️</span>
+                        <span class="emoji-btn">🔥</span>
+                    </div>
+                    <div class="text-input-wrapper">
+                        <textarea 
+                            id="chat-input" 
+                            placeholder="Type your message here... (Press Enter to send, Shift+Enter for new line)"
+                            maxlength="500"
+                            rows="2"
+                        ></textarea>
+                        <button id="send-btn" class="send-btn">➤</button>
+                    </div>
+                    <div class="char-count">0/500</div>
+                </div>
+            </div>
+        </div>
+
+        <div id="message-box" class="hidden"></div>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="client.js"></script>
+</body>
+</html>
